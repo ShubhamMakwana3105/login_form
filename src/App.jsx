@@ -1,44 +1,55 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useForm } from "react-hook-form"
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm()
+  const onSubmit = (data) => console.log(data)
+
 
   return (
     <>
-      <main className="main">
+      <main className="main" onSubmit={handleSubmit(onSubmit)}>
         <h2>Welcome to page</h2>
         <form className="form">
           <div className="secson1">
             <label >username</label>
             <br />
             <input
+              {...register("text", { required: true ,minLength:8})}
               type="text"
               placeholder=" username"
-              required
-            />
+              
+              />
+              {errors.text &&<p className='para'>this field is required</p>}
+              
           </div>
 
           <div className="secson2">
             <label >email</label>
             <br />
             <input
+            {...register("email", { required: true  })}
               type="email"
               placeholder=" email"
-              required
             />
+            {errors.email &&<p className='para'>this field is required</p>}
           </div>
 
           <div className="secson3">
             <label >passoword</label>
             <br />
             <input
+            {...register("password", { required:{value:true}})}
               type="password"
               placeholder=" password"
-              required
-            />
+              />
+              {errors.password &&<p className='para'>this field is required</p>}
           </div>
 
         <div className="btn">
